@@ -52,7 +52,7 @@ export const signUp = async (req, res) => {
             return;
         }
 
-        if (!student_email || student_email.length < 12) {
+        if (!student_email || !isBuetEmail(student_email)) {
             res.status(400).json(
                 "Invalid email. Try with your institutional email"
             );
@@ -315,4 +315,8 @@ const sendEmail = async (email, otp) => {
         console.log(err);
         return false;
     }
+};
+
+const isBuetEmail = (email) => {
+    return email.toLowerCase().endsWith("buet.ac.bd");
 };
