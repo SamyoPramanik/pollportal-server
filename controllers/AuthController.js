@@ -24,7 +24,14 @@ export const signIn = async (req, res) => {
             });
 
             console.log(token);
-            res.status(200).cookie("token", token).json("SignIn successful");
+            res.status(200)
+                .cookie("token", token, {
+                    httpOnly: true,
+                    secure: true, // required for cross-site cookies
+                    sameSite: "None", // required for cross-site cookies
+                    // domain: ".yourdomain.com" // optional for subdomains
+                })
+                .json("SignIn successful");
         } else {
             res.status(404).json("Invalid credentials");
         }
